@@ -1,4 +1,4 @@
-- 👋 Hi, I’m Arsalan, I have 2 years of Python experience and am just staring my JavaScript journey. Reach out to me at arsalan.nosecreek@hotmail.com
+- 👋 Hi, I’m Arsalan, I have 2 years of Python experience and am just staring my JavaScript journey. Reach out to me at arsalan.aasiff@gmail.com
 
 
 
