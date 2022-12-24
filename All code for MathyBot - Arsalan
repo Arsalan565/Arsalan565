@@ -1,3 +1,7 @@
+--#ALL CODE FOR MATHYBOT ON DISCORD--
+
+
+
 import matplotlib.pyplot as plt
 import pytesseract
 from PIL import Image
@@ -29,8 +33,7 @@ import random
 from fractions import Fraction
 from discord.ext import commands
 import asyncio
-list=["Balls are the only place that are cold and hot at the same time!" , "The balls consist of over 10 parts!" , "The billard ball model was based on balls!", "The balls are so unique that many mammels dont actually have them!" , "The balls are the only part of the body that have a different tempreture!", "Your balls dont actually store much, most is actually empty space!", "Most animal species also have body parts that act as our balls do, but they are kept internally. Fish for example"]
-client=discord.Client()
+
 
 
 
