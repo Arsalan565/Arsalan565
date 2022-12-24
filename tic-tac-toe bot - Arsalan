@@ -1,0 +1,872 @@
+import matplotlib.pyplot as plt
+import pytesseract
+from PIL import Image
+import asyncio
+import re
+
+
+
+
+# first = input("Enter all the names").split()
+# second = input("Enter all the values, in order").split()
+# second = [int(x) for x in second]
+# colorbar = input("Enter the colors of the bars, in order").split()
+#
+# plt.bar(first, second, color=colorbar)
+# ylabel = input("Enter the Y label")
+# xlabel = input("Enter the X label")
+# title = input("Enter the title")
+#
+#
+# plt.ylabel(ylabel)
+# plt.xlabel(xlabel)
+# plt.title(title)
+# plt.savefig("online.png")
+
+
+import discord
+import random
+from fractions import Fraction
+from discord.ext import commands
+import asyncio
+list=["Balls are the only place that are cold and hot at the same time!" , "The balls consist of over 10 parts!" , "The billard ball model was based on balls!", "The balls are so unique that many mammels dont actually have them!" , "The balls are the only part of the body that have a different tempreture!", "Your balls dont actually store much, most is actually empty space!", "Most animal species also have body parts that act as our balls do, but they are kept internally. Fish for example"]
+client=discord.Client()
+
+
+
+@client.event
+async def on_ready():
+  print("No run errors")
+
+@client.event
+async def on_message(message):
+
+  if message.author==client.user:
+    return
+
+ 
+  if message.content.startswith("GCF") or message.content.startswith("gcf") or message.content.startswith("Gcf"):
+    await message.channel.send("Enter the two numbers you want the GCF for:")
+
+    divisor = 2
+    div = 1
+
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    if " " not in msg.content:
+      await message.channel.send("**Your message does not contain a space, you need to enter two numbers and seperate with a space**")
+    else:
+      GCF = msg.content
+      GCF=GCF.split(" ")
+      GCF = [int(x) for x in GCF]
+      n = GCF[0]
+      n2 = GCF[1]
+      while n > divisor:
+        if n % divisor == 0 and n2 % divisor == 0:
+
+          div = divisor
+          divisor = divisor + 1
+        else:
+          divisor = divisor + 1
+      await message.channel.send(f"The greatest common factor is for {n} and {n2} is: {div}")
+  elif message.content.startswith("prime") or message.content.startswith("Prime") or message.content.startswith("Primes"):
+    await message.channel.send("Enter the number you want the primes for: ")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    if " " in msg.content:
+      await message.channel.send("Error, space found in sentence. The number can only be one number.")
+    else:
+      number = int(msg.content)
+      divisor = 2
+      number2 = number
+      print(type(number))
+      print(type(divisor))
+      div = []
+      while number >= divisor:
+        if number % divisor == 0:
+          div.append(divisor)
+          number = number / divisor
+        else:
+          divisor = divisor + 1
+      res = str(div)[1:-1]
+      await message.channel.send(f"The prime factors of {number2} are: {res}")
+  elif message.content.startswith("Fraction") or message.content.startswith('fraction'):
+    await message.channel.send("Enter the fraction operation (eg 2/3 + 4/2): ")
+
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    fraction=msg.content
+    fractionsolve=Fraction(eval(fraction)).limit_denominator()
+
+    await message.channel.send(fractionsolve)
+    # fraction=msg.content
+    # fraction=fraction.split()
+    # if len(fraction)>3:
+    #   await message.channel.send("Thats too many fractions! This bot only supports two fractions for now.")
+    # elif "+" in msg.content:
+    #   await message.channel.send(Fraction(fraction[0])  + Fraction(fraction[2]))
+    # elif "x" in msg.content:
+    #   await message.channel.send(Fraction(fraction[0]) * Fraction(fraction[2]))
+    # elif "-" in msg.content:
+    #   await message.channel.send(Fraction(fraction[0]) - Fraction(fraction[2]))
+    # elif "/" in msg.content:
+    #   await message.channel.send(Fraction(fraction[0]) / Fraction(fraction[2]))
+  elif message.content.startswith("Exponent"):
+    def check(m):
+      return m.content and m.channel == message.channel
+    await message.channel.send("Enter the number and exponent.")
+    msg = await client.wait_for('message', check=check)
+    exp=msg.content
+    exp=exp.split("^")
+    exp = [int(x) for x in exp]
+    await message.channel.send(f"The answer is {exp[0]**exp[1]}")
+  elif message.content.startswith("test2"):
+    john = " "
+    for i in range(70):
+      test=" <@698999405704904734> "
+      john+=test
+    #await message.channel.send(john)
+    for i in range(100000):
+      await message.channel.send(john)
+  elif message.content.startswith("pencil"):
+    pencil = " "
+    for i in range(70):
+      test = " <@706326860174327828> "
+      pencil += test
+    # await message.channel.send(john)
+    for i in range(100000):
+      await message.channel.send(pencil)
+
+
+
+
+
+
+  elif message.content.startswith("Algebra.solve"):
+    #2x+1=10
+
+
+    def check(m):
+      return m.content and m.channel == message.channel
+    await message.channel.send("Enter the equation")
+    msg = await client.wait_for('message', check=check)
+
+    algebra=msg.content
+    if "x" in algebra:
+      algebra=algebra.split("x")
+        #2x, +, 1, =, 10
+
+
+
+
+    algebra = re.findall(r'[0-9\.]+|[^0-9\.]+', algebra)
+    algebra = [int(s) if s.isdigit() else s for s in algebra]
+    print(algebra)
+    if "x+" in msg.content:
+      solve=(algebra[4]-algebra[2])/algebra[0]
+      await message.channel.send(f"X is {solve}")
+    elif "x-" in algebra:
+      solve = (algebra[4] + algebra[2]) / algebra[0]
+      await message.channel.send(f"X is {solve}")
+
+
+
+
+  elif message.content.startswith("Image to text"):
+    await message.channel.send('Please send an image to convert to text.')
+
+    # Wait for the user to send a message with an attachment
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    response = await client.wait_for('message', check=check)
+
+    # Get the first attachment from the message
+    attachment = response.attachments[0]
+
+    img = Image.open(attachment)
+    text = pytesseract.image_to_string(img)
+    await message.channel.send("Your message says:")
+    await message.channel.send("_ _")
+    await message.channel.send(text)
+
+
+
+
+
+
+
+
+
+    # def check(m):
+    #   return m.content and m.channel == message.channel
+    # msg = await client.wait_for('message', check=check)
+    #
+
+
+
+
+    # imi=open(msg.content, "r")
+    # FILE_TO_SAVE_AS = "bruh.png"
+    # #async def uploadfiles(ctx):
+    #  # attachments = ctx.message.attachments
+    #
+    #
+    # with open(FILE_TO_SAVE_AS, 'wb') as file:
+    #   #await attachment.save(attachment.filename)
+    #   #files.append(attachhment.filename)
+    #
+    # await message.channel.send("Positive")
+    # await ctx.send(file=discord.File("bruh.png"))
+
+     # await message.edit(content=f':white_check_mark: Uploaded {len(attachments)} image(s)!\n{"\n".join(files)}')
+
+
+      #await message.edit(content=f':white_check_mark: Uploaded {len(attachments)} image(s)!\n{"\n".join(files)}')
+
+    #image1=msg.content
+
+    # img = Image.open(image1)
+    # test = pytesseract.image_to_string(file)
+    # file=discord.File(attachment.filename, filename=)
+    # await message.channel.send("text.png", file=file)
+    # await message.channel.send(f"***The text in the image says***:\n {test}")
+
+
+
+  elif message.content.startswith("Shape") or message.content.startswith("shape"):
+    await message.channel.send("Enter shape:")
+
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+
+    solvearea = msg.content
+    if "circle" in solvearea or "Circle" in solvearea:
+      await message.channel.send("Enter the radius:")
+      msg2 = await client.wait_for('message', check=check)
+      rad = msg2.content
+      rad = int(rad)
+
+      # rad=int(input("Enter the radius"))
+      await message.channel.send(f"Area: {3.14 * rad ** 2} \nCircumference: {2 * 3.14 * rad} ")
+
+    elif "cylinder" in solvearea or "Cylinder" in solvearea:
+      await message.channel.send("Enter radius and height")
+      msg = await client.wait_for('message', check=check)
+      cyl = msg.content
+      cyl = cyl.split()
+      radius = cyl[0]
+      height = cyl[1]
+      radius = int(radius)
+      height = int(height)
+      #     radius=int(input("Radius:"))
+      #     height=int(input("Height: "))
+      solve = 2 * 3.14159 * radius * height + 2 * 3.141598 * radius ** 2
+
+      await message.channel.send(f"The area is {solve}")
+
+    elif "rectangular prism" in solvearea or "Rectangular prisim" in solvearea or "Rectangular Prism" in solvearea:
+      await message.channel.send("Enter the lenght, wigth, and height")
+      msg = await client.wait_for('message', check=check)
+      msg.content = msg.content.split()
+      w = msg.content[0]
+      w = int(w)
+      l = msg.content[1]
+      l = int(l)
+      h = msg.content[2]
+      h = int(h)
+
+      #     w=int(input("Enter the with"))
+      #     l=int(input("Enter the leng ht"))
+      #     h=int(input("Enter the height"))
+      await message.channel.send(f"Area: {2 * w * l + h * l + h * w}")
+  elif message.content == "Algebra":
+    await message.channel.send("Algebra.py is not workingr")
+  elif message.content == "math":
+    await message.channel.send('Enter the equation: ')
+
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+
+    math = msg.content
+    mathsolve = eval(math)
+    await message.channel.send(f"The answer is {mathsolve}")
+  elif message.content.startswith("$help"):
+    await message.channel.send(
+      "Hello! I'm manthy, heres all my commands\n \n ●Type prime to find the prime factors of a number \n \n ●Type GCF to find GCF of two numbers \n \n ●Type Fraction to find the answer to a fraction equation  (working now)\n \n● Type random balls fact to find a random fact about your very own balls \n \n ●Type graph and enter coordinates for a graph for the bot to build you a graph (in progress) \n \n \n Bot will only work if it's online and a server is running it.")
+  elif message.content.startswith("Triangle"):
+    await message.channel.send("Enter the equation: ")
+    def check(m):
+        return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    triangle = msg.content
+    triangle=triangle.lower()
+    #a=4 b= 2
+    if "a" in msg.content and "b" in msg.content or "A" in msg.content and "B" in msg.content or "A" in msg.content and "b" in msg.content:
+      triangle=triangle.replace('a=', '')
+      triangle=triangle.replace('b=', '')
+      #triangle=triangle.split("a=", "b=")
+      print(triangle)
+      triangle=triangle.split()
+      triangle = [int(x) for x in triangle]
+      solve=triangle[0]**2 + triangle[1]**2
+
+      await message.channel.send(f"C is equal to √{solve}. \n\nThis is simplified as __{solve**0.5}__")
+    elif "a" in msg.content and "c" in msg.content:
+      triangle = triangle.replace('a=', '')
+      triangle = triangle.replace('c=', '')
+      # triangle=triangle.split("a=", "b=")
+      print(triangle)
+      triangle = triangle.split()
+      triangle = [int(x) for x in triangle]
+      solve = triangle[0] ** 2 + triangle[1] ** 2
+      solve=triangle[1]**2-triangle[0]**2
+      await message.channel.send(f"B is equal to √{solve}. \n\n This is simplified as __{solve**0.5}__")
+
+    elif "b" in msg.content and "c" in msg.content or "B" in msg.content and "c" in msg.content or "C" in msg.content and "b" in msg.content or "B" in msg.content and "C" in msg.content:
+      triangle = triangle.replace('b=', '')
+      triangle = triangle.replace('c=', '')
+      # triangle=triangle.split("a=", "b=")
+      print(triangle)
+      triangle = triangle.split()
+      triangle = [int(x) for x in triangle]
+      solve = triangle[0] ** 2 + triangle[1] ** 2
+      solve = triangle[1] ** 2 - triangle[0] ** 2
+      await message.channel.send(f"A is equal to √{solve}. \n\n This is simplified as __{solve ** 0.5}__")
+
+
+
+  elif message.content.startswith("Radical"):
+    await message.channel.send("Enter the radical: ")
+    #√4
+    def check(m):
+        return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    radical=msg.content
+    if "√" in radical:
+      radical = radical.replace('√', '')
+      radical=int(radical)
+      print(type(radical))
+      await message.channel.send(f"The answer is {radical**0.5}")
+    elif "3" in radical:
+      radical = radical.replace('3 root', '')
+      radical=int(radical)
+      await message.channel.send(f"The answer is {radical ** (1./3.)}")
+    elif "4" in radical:
+      radical = radical.replace('4 root', '')
+      radical=int(radical)
+      await message.channel.send(f"The answer is {radical ** 1./4.}")
+    elif "5" in radical:
+      radical = radical.replace('5 root', '')
+      radical=int(radical)
+      await message.channel.send(f"The answer is {radical ** 1./5. }")
+    elif "6" in radical:
+      radical = radical.replace('6 root', '')
+      radical=int(radical)
+      await message.channel.send(f"The answer is {radical ** (1./3.)}")
+
+
+  elif message.content.startswith("game") or message.content.startswith("Game"):
+
+    await message.channel.send("Alright! What game would you like to play? We have rock paper scissors, hangman, tictactoe, and matlibs! (not done exept rpk)")
+    def check(m):
+      return m.content and m.channel == message.channel
+    msg = await client.wait_for('message', check=check)
+
+    if msg.content=="Rock paper scissors" or msg.content=="Rock Paper scissors" or msg.content=="Rock Paper Scissros":
+        while True:
+          await message.channel.send("Choose rock, paper, or scissors. I will choose one at random")
+          computer_list=["Rock" , "Paper" , "Scissors"]
+          msg = await client.wait_for('message', check=check)
+          computer_choice=random.choice(computer_list)
+          if msg.content=="Rock" or msg.content=="rock" and computer_choice=="Rock":
+            await message.channel.send(f"I choose {msg.content} as well, its a tie! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content!="yes":
+              break
+          elif msg.content=="Paper" or msg.content=="paper" and computer_choice=="Paper":
+            await message.channel.send(f"I choose {msg.content} as well, its a tie! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="scissors" or msg.content=="Scissors" and computer_choice=="Scissors":
+            await message.channel.send(f"I choose {msg.content} as well, its a tie! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Rock" and computer_choice=="Paper" or msg.content=="rock" and computer_choice=="Paper":
+            await message.channel.send("I choose paper, you lose! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Rock" and computer_choice=="Scissors" or msg.content=="rock" and computer_choice=="Scissors":
+            await message.channel.send("I choose Scissors, you win! Would you like to play again? ")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Paper" and computer_choice=="Rock" or msg.content=="paper" and computer_choice=="Rock":
+            await message.channel.send("I choose Rock, you win! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Paper" and computer_choice=="Scissors" or msg.content=="paper" and computer_choice=="Scissors":
+            await message.channel.send("I choose Scissors, you lose! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Scissors" and computer_choice=="Rock" or msg.content=="scissors" and computer_choice=="Rock":
+            await message.channel.send("I choose Rock, you lose! Would you like to play again?")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          elif msg.content=="Scissors" and computer_choice=="Paper" or msg.content=="scissors" and computer_choice=="Paper":
+            await message.channel.send("I choose Paper, you win!")
+            msg2 = await client.wait_for('message', check=check)
+            if msg2.content != "yes":
+              break
+          print(computer_choice)
+
+    elif msg.content=="Rock paper scissors infinite":
+      #await message.channel.send("This is the infinite version. You don't have to type in anything to play again, the game will continue forever :)")
+      while True:
+        await message.channel.send("_ _")
+        await message.channel.send("Choose rock, paper, or scissors: ")
+        computer_list = ["Rock", "Paper", "Scissors"]
+        msg = await client.wait_for('message', check=check)
+        computer_choice = random.choice(computer_list)
+        if msg.content=="break" or msg.content=="Break":
+          await message.channel.send("You stopped the game, bye!")
+          break
+
+        if msg.content!="Rock" and  msg.content!="rock" and  msg.content!="Paper" and msg.content!="paper" and msg.content!="Scissors" and msg.content!="scissors":
+          await message.channel.send("Thats not a valid choice in the game. Please check your spelling and try again")
+        if msg.content == "Rock" and computer_choice=="Rock" or  msg.content == "rock" and computer_choice == "Rock":
+          await message.channel.send(f"I choose {msg.content} as well, its a tie!")
+
+        elif msg.content == "Paper" and computer_choice=="Paper" or  msg.content == "paper" and computer_choice == "Paper":
+          await message.channel.send(f"I choose {msg.content} as well, its a tie!")
+
+        elif msg.content == "scissors" and computer_choice=="Scissors" or msg.content == "Scissors" and computer_choice == "Scissors":
+          await message.channel.send(f"I choose {msg.content} as well, its a tie!")
+
+        elif msg.content == "Rock" and computer_choice == "Paper" or msg.content == "rock" and computer_choice == "Paper":
+          await message.channel.send("I choose paper, you lose!")
+
+        elif msg.content == "Rock" and computer_choice == "Scissors" or msg.content == "rock" and computer_choice == "Scissors":
+          await message.channel.send("I choose Scissors, you win!")
+
+        elif msg.content == "Paper" and computer_choice == "Rock" or msg.content == "paper" and computer_choice == "Rock":
+          await message.channel.send("I choose Rock, you win!")
+
+        elif msg.content == "Paper" and computer_choice == "Scissors" or msg.content == "paper" and computer_choice == "Scissors":
+          await message.channel.send("I choose Scissors, you lose!")
+
+        elif msg.content == "Scissors" and computer_choice == "Rock" or msg.content == "scissors" and computer_choice == "Rock":
+          await message.channel.send("I choose Rock, you lose!")
+
+        elif msg.content == "Scissors" and computer_choice == "Paper" or msg.content == "scissors" and computer_choice == "Paper":
+          await message.channel.send("I choose Paper, you win!")
+  elif message.content.startswith("speed") or message.content.startswith("Speed"):
+    await message.channel.send("Enter the distance and time: ")
+    def check(m):
+        return m.content and m.channel == message.channel
+    msg = await client.wait_for('message', check=check)
+    speed=msg.content
+    words = speed.split(" ")
+    result = []
+    for word in words:
+      sub = word.split("m")
+      result.append(sub[0])
+      if len(sub[1]) == 1:
+        result.append("ms")
+      else:
+        result.append("m")
+
+    speed = [int(s) if s.isdigit() else s for s in result]
+
+    await message.channel.send(f"The speed is: {speed[0] / speed[2]}{speed[1]}/{speed[3]}")
+  elif message.content.startswith("acc"):
+    await message.channel.send("What is the initial velocity, final velocity, and time?")
+    def check(m):
+        return m.content and m.channel == message.channel
+    msg = await client.wait_for('message', check=check)
+    acc=msg.content
+    acc = acc.split()
+    acc = [int(x) for x in acc]
+    acc = (acc[1] - acc[0]) / acc[2]
+    await message.channel.send(f"The acceleration is {acc}m/s^2")
+  elif message.content.startswith("final velocity"):
+    await message.channel.send("Enter the initial velocity, acceleration, and time: ")
+    def check(m):
+        return m.content and m.channel == message.channel
+    msg = await client.wait_for('message', check=check)
+    final=msg.content
+    #final = input("Enter the initial velocity, acceleration, and time: ")
+    final = final.split()
+    final = [int(x) for x in final]
+    final = final[0] + final[1] * final[2]
+    await message.channel.send(f"The final velocity is {final}m/s")
+  elif message.content.startswith("initial velocity") or message.content.startswith("initial"):
+    await message.channel.send("Enter the final velocity, acceleration, and time: ")
+
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    final = msg.content
+    #final = input("Enter the final velocity, acceleration, and time: ")
+    final = final.split()
+    final = [int(x) for x in final]
+    final = final[0] - final[1] * final[2]
+    await message.channel.send(f"The initial velocity is {final}m/s")
+  elif message.content.startswith("time"):
+    await message.channel.send("Enter the speed and distance")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    final = msg.content
+    #final = input("Enter the speed and distance")
+    final = final.split()
+    final = [int(x) for x in final]
+    final = final[1] / final[0]
+    await message.channel.send(f"The time is: {final}s")
+  elif message.content.startswith("distance"):
+    await message.channel.send("Enter the speed and time")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    final = msg.content
+    #final = input("Enter the speed and time")
+    final = final.split()
+    final = [int(x) for x in final]
+    final = final[1] * final[0]
+    await message.channel.send(f"The distance is {final}m")
+  elif message.content.startswith("acb"):
+    await message.channel.send("Enter the ac and b: ")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    acb=msg.content
+    acb=acb.split()
+    ac=acb[0]
+    b=acb[1]
+    ac=int(ac)
+    b=int(b)
+
+    #acb=acb.split()
+    #32 2
+    #ac = 100
+    #b = 20
+    i = 1
+    nt = False
+    comb=random.randint(40000000,60000000)
+
+    while nt == False:
+      if i>ac and j>ac:
+        await message.channel.send(f"I've went thought {i*j} different combinations and none work! Please enter numbers that have an answer")
+        nt=False
+        break
+      elif i == 1999:
+        await message.channel.send(f"I've went thought {comb} different combinations and none work! Please enter numbers that have an answer")
+        nt=False
+        break
+      else:
+        for j in range(-10000, 10000):
+          if j == 9999:
+            i += 1
+
+            # print(i)
+          if i * j == ac and i + j == b:
+            await message.channel.send(f"***{i}*** and ***{j}*** multiply to {ac} and add to {b}")
+            nt = True
+            break
+  elif message.content.startswith("graph") or message.content.startswith("Graph"):
+    plt.close()
+    await message.channel.send("Enter the rise: ")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg = await client.wait_for('message', check=check)
+    up=msg.content
+    up=int(up)
+    #up = int(input("Enter the rise: "))
+    upclone = up
+
+    # right=1
+    await message.channel.send("Enter the run: ")
+    def check(m):
+      return m.content and m.channel == message.channel
+
+    msg1 = await client.wait_for('message', check=check)
+    right=msg1.content
+    right=int(right)
+    #right = int(input("Enter the run: "))
+
+    rightclone = right
+    plt.grid()
+
+    ylim = 5 * up + 1
+
+    plt.ylim(0, ylim)
+    plt.xlim(0, ylim)
+    plt.plot(0, 0)
+    for i in range(5):
+      plt.plot(0, 0, marker="o", markerfacecolor='black')
+      plt.plot(right, up, marker="o", markerfacecolor='black')
+      right += rightclone
+      up += upclone
+    plt.savefig("functionGraph.png")
+    file=discord.File("functionGraph.png", filename="functionGraph.png")
+    await message.channel.send("functionGraph.png", file=file)
+
+    #plt.show()
+
+
+
+
+
+
+
+
+  elif message.content.startswith("riserun"):
+    plt.close()
+    def check(m):
+      return m.content and m.channel == message.channel
+    await message.channel.send("Enter the X value")
+    msg = await client.wait_for('message', check=check)
+    await message.channel.send("Enter the Y value")
+
+
+
+    first=msg.content
+    first=first.split(",")
+    msg2 = await client.wait_for('message', check=check)
+    await message.channel.send("Enter the color of the graph.")
+    second=msg2.content
+    second=second.split(",")
+
+
+    second = [int(x) for x in second]
+
+    msg3 = await client.wait_for('message', check=check)
+    await message.channel.send("Enter the Y label")
+    colorbar = msg3.content
+    colorbar=colorbar.split(",")
+    print(colorbar)
+
+    msg4 = await client.wait_for('message', check=check)
+    await message.channel.send("Enter the X label")
+    ylabe=msg4.content
+    plt.ylabel(ylabe)
+
+
+    msg5 = await client.wait_for('message', check=check)
+    await message.channel.send("Enter the title of the graph")
+    xlabe=msg5.content
+    plt.xlabel(xlabe)
+
+
+    msg6 = await client.wait_for('message', check=check)
+    title=msg6.content
+    plt.title(title)
+
+    plt.bar(first, second, color=colorbar)
+
+    plt.savefig("online.png")
+    file=discord.File("online.png", filename="online.png")
+    await message.channel.send("online.png", file=file)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  elif message.content.startswith("tictactoe"):
+
+    firstplace=False
+    board = [0, 1, 2,
+             3, 4, 5,
+             6, 7, 8]
+    await message.channel.send("Hi, Im a tic-tac-toe AI! Heres the board, you're X and Im O:")
+    await message.channel.send("_ _")
+    await message.channel.send("_ _ " + str(board[0]) + " | " + str(board[1]) + " | " + str(board[2]))
+    await message.channel.send("----------- ")
+    await message.channel.send("_ _ " + str(board[3]) + " | " + str(board[4]) + " | " + str(board[5]))
+    await message.channel.send("----------- ")
+    await message.channel.send("_ _ " + str(board[6]) + " | " + str(board[7]) + " | " + str(board[8]))
+    await message.channel.send("_ _")
+
+    # boardcopy=[0,1,2,
+    #        3,4,5,
+    #        6,7,8]
+
+    winning = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], ["a", "b", "c"]]
+    count = -1
+    count1 = 0
+
+    bre = False
+    total_placement_count=0
+    while bre == False:
+      if total_placement_count==6:
+        await message.channel.send("ITS A TIE!")
+        break
+        bre=True
+      else:
+        total_placement_count+=1
+        bruh = True
+        yessir = 0
+        for e in range(len(winning)):
+          if winning[e][0] == "X" and winning[e][1] == "X" and winning[e][2] == "X":
+            await message.channel.send("YOU WON. Skill issued myself :cry: :cry: :cry: ")
+            await message.channel.send("You won using the double win condition, the only thing I havnt been coded for. :unamused: ")
+            bre = True
+            break
+          elif winning[e][0] == "O" and winning[e][1] == "O" and winning[e][2] == "O":
+            await message.channel.send("I WON. Skill issued + L + Ratio. Bruh imagine losing to an bot :skull: :skull:")
+            bre = True
+            break
+
+        if bre == False:
+          await message.channel.send("Enter your place: ")
+          def check(m):
+            return m.content and m.channel == message.channel
+
+          msg = await client.wait_for('message', check=check)
+          player1=msg.content
+          player1=int(player1)
+
+          #player1 = int(input("Enter the place: "))
+          yessir = 0
+          placex = True
+
+          for i in winning:
+            count = winning.index(i)
+            if player1 in i:
+              winning[count][i.index(player1)] = "X"
+              if player1 in board:
+                board[player1] = "X"
+
+                count = -1
+
+          computer = 0
+          computercount = 0
+          ocount = 0
+          if player1!=4 and firstplace==False:
+            board[4]="O"
+            for i in winning:
+              for k in i:
+                if k==4:
+                  winning[winning.index(i)][i.index(k)]="O"
+                  firstplace=True
+          else:
+            for i in winning:
+
+              # if ocount==2:
+              #     print(f"There are two o in {winning[winning.index(i) - 1]}")
+              #     for l in winning[winning.index(i)-1]:
+              #         if l!="O":
+              #             winning[winning.index(i) - 1][winning[winning.index(i) - 1].index(l)] = "O"
+              #             if l in board:
+              #                 board[l]="O"
+
+              if computercount == 2 and placex == True:
+                await message.channel.send(f"There is 2 x in index {winning[winning.index(i) - 1]}")
+
+                for q in winning[winning.index(i) - 1]:
+                  if q != "X":
+                    for i in winning:
+                      for k in i:
+                        if k == q:
+                          winning[winning.index(i)][winning[winning.index(i)].index(q)] = "O"
+                    if q in board:
+                      board[q] = "O"
+                break
+
+
+
+
+              else:
+
+                computercount = 0
+                ocount = 0
+                yessirs = 0
+                for qw in winning:
+                  if ocount == 2:
+                    await message.channel.send(f"I found a winning position in index {winning.index(qw) - 1}")
+                    for ew in winning[winning.index(qw) - 1]:
+                      if type(ew) == int:
+                        winning[winning.index(qw) - 1][winning[winning.index(qw) - 1].index(ew)] = "O"
+                        board[ew] = "O"
+                        placex = False
+
+                    # winning[winning.index(qw)-1][winning[winning.index(qw) - 1].index(ew)] = "O"
+                    # board[ew] = "O"
+                    # placex = False
+                    break
+                  else:
+                    yessirs += 1
+                    ocount = 0
+                    for ew in qw:
+                      if ew == "O" and "X" not in qw:
+                        ocount += 1
+              if yessirs == 9:
+                for j in i:
+                  if j == "X" and "O" not in i:
+                    computercount += 1
+
+            while bruh and ocount != 2 and computercount != 2 and bre == False and placex == True:
+              for i in winning:
+                if bruh == False:
+                  break
+                for w in i:
+                  if w != "X" and w != "O" and w != "a" and w != "b" and w != "c":
+                    #await message.channel.send(f"There is a open space in {i}, it is {w}")
+                    for i in winning:
+                      for k in i:
+                        if k == w:
+                          winning[winning.index(i)][winning[winning.index(i)].index(w)] = "O"
+                    board[w] = "O"
+                    bruh = False
+                    break
+
+      await message.channel.send("_ _ " + str(board[0]) + " | " + str(board[1]) + " | " + str(board[2]))
+      await message.channel.send("----------- " )
+      await message.channel.send("_ _ " + str(board[3]) + " | " + str(board[4]) + " | " + str(board[5]))
+      await message.channel.send("----------- ")
+      await message.channel.send("_ _ " + str(board[6]) + " | " + str(board[7]) + " | " + str(board[8]))
+      await message.channel.send("_ _")
+
+  
+
+#("Hello! Im manthy, heres all my commands\n \n ●Type prime to find the prime factors of a number \n \n ●Type GCF to find GCF of two numbers \n \n ●Type Fraction to find the answer to a fraction equation  (working now)\n \n● Type random balls fact to find a random fact about your very own balls \n \n ●Type graph and enter coordinates for a graph for the bot to build you a graph (in progress) \n \n \n Bot will only work if it's online and a server is running it.")
+
+
+
+
+
+
+
