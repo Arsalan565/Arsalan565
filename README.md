@@ -1,4 +1,4 @@
-- 👋 Hi, I’m Arsalan, I have 2 years of Python experience and am currently taking Cs50x and cs50ai. Reach out to me at arsalan.aasiff@gmail.com
+- 👋 Hi, I’m Arsalan, I have 2 years of Python experience and am currently taking Cs50x and cs50ai.
 
 
 
